@@ -34,7 +34,7 @@ public class CaLamService {
 
 	public List<CaLamModel> getByUsername(String username) {
 		Optional<AccountModel> opAccount = accountRepositoty.findByUsername(username);
-		if (opAccount.isEmpty()) {
+		if (!opAccount.isPresent()) {
 			throw new EntityNotFoundException("Username not found!");
 		}
 		return caLamRepository.findByCsytId(opAccount.get().getInfoId());
@@ -42,11 +42,11 @@ public class CaLamService {
 
 	public PagedListHolder<CaLamModel> get(int page, int size, String username) {
 		Optional<AccountModel> opAccount = accountRepositoty.findByUsername(username);
-		if (opAccount.isEmpty()) {
+		if (!opAccount.isPresent()) {
 			throw new EntityNotFoundException("Username not found!");
 		}
 		Optional<CoSoYTeModel> opCsyt = coSoYTeRepository.findById(opAccount.get().getInfoId());
-		if (opCsyt.isEmpty()) {
+		if (!opCsyt.isPresent()) {
 			throw new EntityNotFoundException("CSYT Id not found!");
 		}
 		PagedListHolder<CaLamModel> res = new PagedListHolder<>(
@@ -58,7 +58,7 @@ public class CaLamService {
 
 	public void deleteById(String id) {
 		Optional<CaLamModel> optional = caLamRepository.findById(id);
-		if (optional.isEmpty()) {
+		if (!optional.isPresent()) {
 			throw new EntityNotFoundException("Id not found!");
 		} else {
 			caLamRepository.deleteById(id);
@@ -67,12 +67,12 @@ public class CaLamService {
 
 	public CaLamModel create(CaLamModel caLam, String username) {
 		Optional<AccountModel> opAccount = accountRepositoty.findByUsername(username);
-		if (opAccount.isEmpty()) {
+		if (!opAccount.isPresent()) {
 			throw new EntityNotFoundException("Username not found!");
 		}
 		caLam.setCsytId(opAccount.get().getInfoId());
 		Optional<CoSoYTeModel> opCsyt = coSoYTeRepository.findById(caLam.getCsytId());
-		if (opCsyt.isEmpty()) {
+		if (!opCsyt.isPresent()) {
 			throw new EntityNotFoundException("CSYT Id not found!");
 		}
 		Optional<CaLamModel> optional = caLamRepository.findByNameAndCsytId(caLam.getTen(), caLam.getCsytId());
@@ -84,11 +84,11 @@ public class CaLamService {
 
 	public CaLamModel update(CaLamModel caLam, String id) {
 		Optional<CaLamModel> optional = caLamRepository.findById(id);
-		if (optional.isEmpty()) {
+		if (!optional.isPresent()) {
 			throw new EntityNotFoundException("Id not found!");
 		}
 		Optional<CoSoYTeModel> opCsyt = coSoYTeRepository.findById(caLam.getCsytId());
-		if (opCsyt.isEmpty()) {
+		if (!opCsyt.isPresent()) {
 			throw new EntityNotFoundException("CSYT Id not found!");
 		}
 		caLam.setId(id);

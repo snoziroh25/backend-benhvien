@@ -62,7 +62,7 @@ public class SoYTeService {
 
 	public void deleteById(String id) {
 		Optional<SoYTeModel> optional = soYTeRepository.findById(id);
-		if (optional.isEmpty()) {
+		if (!optional.isPresent()) {
 			throw new EntityNotFoundException("Product Id not found!");
 		} else {
 			soYTeRepository.deleteById(id);
@@ -92,7 +92,7 @@ public class SoYTeService {
 
 	public SoYTeModel update(SoYTeModel soYTe, String id) {
 		Optional<SoYTeModel> optional = soYTeRepository.findById(id);
-		if (optional.isEmpty()) {
+		if (!optional.isPresent()) {
 			throw new EntityNotFoundException("So Y Te Id not found!");
 		} else {
 			soYTe.setId(id);

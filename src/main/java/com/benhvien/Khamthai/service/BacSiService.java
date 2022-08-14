@@ -41,7 +41,7 @@ public class BacSiService {
 
 	public void deleteById(String id) {
 		Optional<BacSiModel> optional = bacSiRepository.findById(id);
-		if (optional.isEmpty()) {
+		if (!optional.isPresent()) {
 			throw new EntityNotFoundException("Id not found!");
 		} else {
 			bacSiRepository.deleteById(id);
@@ -73,7 +73,7 @@ public class BacSiService {
 
 	public BacSiModel update(BacSiModel bacSi, String id) {
 		Optional<BacSiModel> optional = bacSiRepository.findById(id);
-		if (optional.isEmpty()) {
+		if (!optional.isPresent()) {
 			throw new EntityNotFoundException("Id not found!");
 		} else {
 			bacSi.setId(id);

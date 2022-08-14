@@ -62,7 +62,7 @@ public class CoSoYTeService {
 			throw new EntityNotFoundException("Account doesn't exist!");
 		}
 		Optional<RoleModel> opRole = roleRepository.findById(opAccount.get().getRoleId());
-		if (opRole.isEmpty()) {
+		if (!opRole.isPresent()) {
 			throw new EntityNotFoundException("Role Id not found!");
 		}
 
@@ -110,7 +110,7 @@ public class CoSoYTeService {
 
 	public void deleteById(String id) {
 		Optional<CoSoYTeModel> optional = coSoYTeRepository.findById(id);
-		if (optional.isEmpty()) {
+		if (!optional.isPresent()) {
 			throw new EntityNotFoundException("Co So Y Te Id not found!");
 		} else {
 			coSoYTeRepository.deleteById(id);
@@ -153,7 +153,7 @@ public class CoSoYTeService {
 		account.setUsername(request.getUsername());
 		account.setPassword(bCryptPasswordEncoder.encode(request.getPassword()));
 		Optional<RoleModel> opRole = roleRepository.findByTitle("COSOYTE");
-		if (opRole.isEmpty()) {
+		if (!opRole.isPresent()) {
 			throw new EntityNotFoundException("Role not found!");
 		}
 		account.setRoleId(opRole.get().getId());
@@ -163,11 +163,11 @@ public class CoSoYTeService {
 
 	public CoSoYTeModel update(CoSoYTeRequest request, String id) {
 		Optional<CoSoYTeModel> optional = coSoYTeRepository.findById(id);
-		if (optional.isEmpty()) {
+		if (!optional.isPresent()) {
 			throw new EntityNotFoundException("Co So Y Te Id not found!");
 		} else {
 			Optional<SoYTeModel> opSoYTe = soYTeRepository.findById(request.getSoYTeId());
-			if (opSoYTe.isEmpty()) {
+			if (!opSoYTe.isPresent()) {
 				throw new EntityNotFoundException("So Y Te Id not found!");
 			}
 			CoSoYTeModel csyt = optional.get();

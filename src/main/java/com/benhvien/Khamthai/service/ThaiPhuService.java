@@ -75,11 +75,11 @@ public class ThaiPhuService {
 
 	public void deleteById(String id) {
 		Optional<ThaiPhuModel> optional = thaiPhuRepository.findById(id);
-		if (optional.isEmpty()) {
+		if (!optional.isPresent()) {
 			throw new EntityNotFoundException("Thai Phu Id not found!");
 		}
 		Optional<AccountModel> opAccount = accountRepositoty.findByInfoId(id);
-		if (opAccount.isEmpty()) {
+		if (!opAccount.isPresent()) {
 			throw new EntityNotFoundException("Account not found!");
 		}
 		accountRepositoty.deleteById(opAccount.get().getId());
@@ -109,7 +109,7 @@ public class ThaiPhuService {
 
 	public ThaiPhuModel update(ThaiPhuModel thaiPhu, String id) {
 		Optional<ThaiPhuModel> optional = thaiPhuRepository.findById(id);
-		if (optional.isEmpty()) {
+		if (!optional.isPresent()) {
 			throw new EntityNotFoundException("Product Id not found!");
 		} else {
 			thaiPhu.setId(id);

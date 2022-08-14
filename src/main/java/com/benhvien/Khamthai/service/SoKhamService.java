@@ -116,7 +116,7 @@ public class SoKhamService {
 
 	public void deleteById(String id) {
 		Optional<SoKhamModel> optional = soKhamRepository.findById(id);
-		if (optional.isEmpty()) {
+		if (!optional.isPresent()) {
 			throw new EntityNotFoundException("Id not found!");
 		} else {
 			soKhamRepository.deleteById(id);
@@ -133,7 +133,7 @@ public class SoKhamService {
 
 	public SoKhamModel update(SoKhamModel soKham, String id) {
 		Optional<SoKhamModel> optional = soKhamRepository.findById(id);
-		if (optional.isEmpty()) {
+		if (!optional.isPresent()) {
 			throw new EntityNotFoundException("Id not found!");
 		} else {
 			soKham.setId(id);

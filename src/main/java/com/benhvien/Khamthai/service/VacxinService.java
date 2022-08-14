@@ -44,7 +44,7 @@ public class VacxinService {
 			VacxinDto dto = new VacxinDto();
 			BeanUtils.copyProperties(vacxin, dto);
 			Optional<BenhModel> opBenh = benhRepository.findById(vacxin.getBenhId());
-			if (opBenh.isEmpty()) {
+			if (!opBenh.isPresent()) {
 				throw new EntityNotFoundException("Benh Id not found!");
 			}
 			dto.setTenBenh(opBenh.get().getTen());
@@ -55,7 +55,7 @@ public class VacxinService {
 
 	public void deleteById(String id) {
 		Optional<VacxinModel> optional = vacxinRepository.findById(id);
-		if (optional.isEmpty()) {
+		if (!optional.isPresent()) {
 			throw new EntityNotFoundException("Id not found!");
 		} else {
 			vacxinRepository.deleteById(id);
@@ -77,7 +77,7 @@ public class VacxinService {
 
 	public VacxinModel update(VacxinModel vacxin, String id) {
 		Optional<VacxinModel> optional = vacxinRepository.findById(id);
-		if (optional.isEmpty()) {
+		if (!optional.isPresent()) {
 			throw new EntityNotFoundException("Id not found!");
 		} else {
 			vacxin.setId(id);

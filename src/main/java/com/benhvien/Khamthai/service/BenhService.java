@@ -27,7 +27,7 @@ public class BenhService {
 
 	public void deleteById(String id) {
 		Optional<BenhModel> optional = benhRepository.findById(id);
-		if (optional.isEmpty()) {
+		if (!optional.isPresent()) {
 			throw new EntityNotFoundException("Id not found!");
 		} else {
 			benhRepository.deleteById(id);
@@ -45,7 +45,7 @@ public class BenhService {
 
 	public BenhModel update(BenhModel benh, String id) {
 		Optional<BenhModel> optional = benhRepository.findById(id);
-		if (optional.isEmpty()) {
+		if (!optional.isPresent()) {
 			throw new EntityNotFoundException("Id not found!");
 		} else {
 			benh.setId(id);

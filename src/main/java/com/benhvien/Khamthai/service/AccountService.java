@@ -74,7 +74,7 @@ public class AccountService {
 			throw new EntityNotFoundException("Account already exist!");
 		} else {
 			Optional<RoleModel> opRole = roleRepository.findById(account.getRoleId());
-			if (opRole.isEmpty()) {
+			if (!opRole.isPresent()) {
 				throw new EntityNotFoundException("Role Id not found!");
 			}
 			switch (opRole.get().getTitle()) {
@@ -108,7 +108,7 @@ public class AccountService {
 
 	public AccountModel update(AccountModel account, String id) {
 		Optional<AccountModel> optional = accountRepositoty.findById(id);
-		if (optional.isEmpty()) {
+		if (!optional.isPresent()) {
 			throw new EntityNotFoundException("Account Id not found!");
 		} else {
 			account.setId(id);
@@ -116,7 +116,7 @@ public class AccountService {
 				account.setRoleId(optional.get().getId());
 			} else {
 				Optional<RoleModel> opRole = roleRepository.findById(account.getRoleId());
-				if (opRole.isEmpty()) {
+				if (!opRole.isPresent()) {
 					throw new EntityNotFoundException("Role Id not found!");
 				}
 			}
@@ -194,7 +194,7 @@ public class AccountService {
 		for (AccountModel account : list) {
 			TaiKhoanDto dto = new TaiKhoanDto();
 			Optional<RoleModel> role = roleRepository.findById(account.getRoleId());
-			if (role.isEmpty()) {
+			if (!role.isPresent()) {
 				throw new EntityNotFoundException("Role Id doesn't exist!");
 			}
 			dto.setRoleTitle(role.get().getTitle());
@@ -239,7 +239,7 @@ public class AccountService {
 			throw new EntityNotFoundException("Account doesn't exist!");
 		}
 		Optional<RoleModel> opRole = roleRepository.findById(opAccount.get().getRoleId());
-		if (opRole.isEmpty()) {
+		if (!opRole.isPresent()) {
 			throw new EntityNotFoundException("Role Id not found!");
 		}
 		return opRole.get().getTitle();
@@ -259,7 +259,7 @@ public class AccountService {
 			throw new EntityNotFoundException("Account doesn't exist!");
 		}
 		Optional<RoleModel> opRole = roleRepository.findById(opAccount.get().getRoleId());
-		if (opRole.isEmpty()) {
+		if (!opRole.isPresent()) {
 			throw new EntityNotFoundException("Role Id not found!");
 		}
 		String res;
@@ -293,7 +293,7 @@ public class AccountService {
 
 	public AccountModel changePassword(ChangePasswordRequest request) {
 		Optional<AccountModel> account = accountRepositoty.findByUsername(request.getUsername());
-		if (account.isEmpty()) {
+		if (!account.isPresent()) {
 			throw new EntityNotFoundException("Username not found!");
 		}
 		String oldPass = bCryptPasswordEncoder.encode(request.getOldPassword());

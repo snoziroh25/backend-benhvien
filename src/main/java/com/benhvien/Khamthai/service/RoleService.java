@@ -23,7 +23,7 @@ public class RoleService {
 
 	public void deleteById(String id) {
 		Optional<RoleModel> option = roleRepository.findById(id);
-		if (option.isEmpty()) {
+		if (!option.isPresent()) {
 			throw new EntityNotFoundException("Id not found!");
 		} else {
 			roleRepository.deleteById(id);
@@ -40,7 +40,7 @@ public class RoleService {
 
 	public RoleModel update(RoleModel role, String id) {
 		Optional<RoleModel> option = roleRepository.findById(id);
-		if (option.isEmpty()) {
+		if (!option.isPresent()) {
 			throw new EntityNotFoundException("Id not found!");
 		} else {
 			role.setId(id);

@@ -76,7 +76,7 @@ public class LichKhamService {
 
 	public PagedListHolder<LichKhamDto> get(int page, int size, String username) {
 		Optional<AccountModel> opAccount = accountRepositoty.findByUsername(username);
-		if (opAccount.isEmpty()) {
+		if (!opAccount.isPresent()) {
 			throw new EntityNotFoundException("Username not found!");
 		}
 		List<LichKhamModel> listLichKham = lichKhamRepository.findByCsytId(opAccount.get().getInfoId());
@@ -89,7 +89,7 @@ public class LichKhamService {
 
 	public void deleteById(String id) {
 		Optional<LichKhamModel> optional = lichKhamRepository.findById(id);
-		if (optional.isEmpty()) {
+		if (!optional.isPresent()) {
 			throw new EntityNotFoundException("Id not found!");
 		} else {
 			lichKhamRepository.deleteById(id);
@@ -116,7 +116,7 @@ public class LichKhamService {
 
 	public LichKhamModel update(LichKhamModel lichKham, String id) {
 		Optional<LichKhamModel> optional = lichKhamRepository.findById(id);
-		if (optional.isEmpty()) {
+		if (!optional.isPresent()) {
 			throw new EntityNotFoundException("Id not found!");
 		} else {
 			lichKham.setId(id);

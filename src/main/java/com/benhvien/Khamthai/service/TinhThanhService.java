@@ -23,7 +23,7 @@ public class TinhThanhService {
 
 	public void deleteById(String id) {
 		Optional<TinhThanhModel> optional = tinhThanhRepository.findById(id);
-		if (optional.isEmpty()) {
+		if (!optional.isPresent()) {
 			throw new EntityNotFoundException("Id not found!");
 		} else {
 			tinhThanhRepository.deleteById(id);
@@ -41,7 +41,7 @@ public class TinhThanhService {
 
 	public TinhThanhModel update(TinhThanhModel tinhThanh, String id) {
 		Optional<TinhThanhModel> optional = tinhThanhRepository.findById(id);
-		if (optional.isEmpty()) {
+		if (!optional.isPresent()) {
 			throw new EntityNotFoundException("Id not found!");
 		} else {
 			tinhThanh.setId(id);

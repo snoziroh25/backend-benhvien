@@ -31,15 +31,15 @@ public class XaPhuongService {
 
 	public String getDetail(String xaPhuongId) {
 		Optional<XaPhuongModel> opXaPhuong = xaPhuongRepository.findById(xaPhuongId);
-		if (opXaPhuong.isEmpty()) {
+		if (!opXaPhuong.isPresent()) {
 			throw new EntityNotFoundException("Id xa phuong not found!");
 		}
 		Optional<QuanHuyenModel> opQuanHuyen = quanHuyenRepository.findById(opXaPhuong.get().getQuanHuyenId());
-		if (opQuanHuyen.isEmpty()) {
+		if (!opQuanHuyen.isPresent()) {
 			throw new EntityNotFoundException("Id quan huyen not found!");
 		}
 		Optional<TinhThanhModel> opTinhThanh = tinhThanhRepository.findById(opQuanHuyen.get().getTinhThanhId());
-		if (opTinhThanh.isEmpty()) {
+		if (!opTinhThanh.isPresent()) {
 			throw new EntityNotFoundException("Id tinh thanh not found!");
 		}
 		return opXaPhuong.get().getTen() + " - " + opQuanHuyen.get().getTen() + " - " + opTinhThanh.get().getTen();
@@ -51,7 +51,7 @@ public class XaPhuongService {
 
 	public List<XaPhuongModel> getByQuanHuyenId(String quanHuyenId) {
 		Optional<QuanHuyenModel> optional = quanHuyenRepository.findById(quanHuyenId);
-		if (optional.isEmpty()) {
+		if (!optional.isPresent()) {
 			throw new EntityNotFoundException("Id not found!");
 		}
 		return xaPhuongRepository.findByQuanHuyenId(quanHuyenId);
@@ -60,12 +60,12 @@ public class XaPhuongService {
 	public HashMap<String, Object> getList(String xaPhuongId) {
 		Map<String, Object> response = new HashMap<>();
 		Optional<XaPhuongModel> optional = xaPhuongRepository.findById(xaPhuongId);
-		if (optional.isEmpty()) {
+		if (!optional.isPresent()) {
 			throw new EntityNotFoundException("Xa phuong Id not found!");
 		}
 		String quanHuyenId = optional.get().getQuanHuyenId();
 		Optional<QuanHuyenModel> opQuanHuyen = quanHuyenRepository.findById(quanHuyenId);
-		if (opQuanHuyen.isEmpty()) {
+		if (!opQuanHuyen.isPresent()) {
 			throw new EntityNotFoundException("Id not found!");
 		}
 		response.put("xaPhuongs", xaPhuongRepository.findByQuanHuyenId(optional.get().getQuanHuyenId()));
@@ -76,7 +76,7 @@ public class XaPhuongService {
 
 	public void deleteById(String id) {
 		Optional<XaPhuongModel> optional = xaPhuongRepository.findById(id);
-		if (optional.isEmpty()) {
+		if (!optional.isPresent()) {
 			throw new EntityNotFoundException("Id not found!");
 		} else {
 			xaPhuongRepository.deleteById(id);
@@ -89,7 +89,7 @@ public class XaPhuongService {
 
 	public List<XaPhuongModel> getByXaPhuongId(String xaPhuongId) {
 		Optional<XaPhuongModel> optional = xaPhuongRepository.findById(xaPhuongId);
-		if (optional.isEmpty()) {
+		if (!optional.isPresent()) {
 			throw new EntityNotFoundException("Xa phuong Id not found!");
 		}
 		return xaPhuongRepository.findByQuanHuyenId(optional.get().getQuanHuyenId());
@@ -97,7 +97,7 @@ public class XaPhuongService {
 
 	public XaPhuongModel update(XaPhuongModel xaPhuong, String id) {
 		Optional<XaPhuongModel> optional = xaPhuongRepository.findById(id);
-		if (optional.isEmpty()) {
+		if (!optional.isPresent()) {
 			throw new EntityNotFoundException("Id not found!");
 		} else {
 			xaPhuong.setId(id);

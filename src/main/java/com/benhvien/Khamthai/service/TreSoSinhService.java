@@ -93,7 +93,7 @@ public class TreSoSinhService {
 			throw new EntityNotFoundException("Account doesn't exist!");
 		}
 		Optional<RoleModel> opRole = roleRepository.findById(opAccount.get().getRoleId());
-		if (opRole.isEmpty()) {
+		if (!opRole.isPresent()) {
 			throw new EntityNotFoundException("Role Id not found!");
 		}
 		List<TreSoSinhModel> listTreSoSinh = new ArrayList<>();
@@ -142,7 +142,7 @@ public class TreSoSinhService {
 
 	public void deleteById(String id) {
 		Optional<TreSoSinhModel> optional = treSoSinhRepository.findById(id);
-		if (optional.isEmpty()) {
+		if (!optional.isPresent()) {
 			throw new EntityNotFoundException("Tre So Sinh Id not found!");
 		} else {
 			treSoSinhRepository.deleteById(id);
@@ -163,7 +163,7 @@ public class TreSoSinhService {
 
 	public TreSoSinhModel update(TreSoSinhModel treSoSinh, String id) {
 		Optional<TreSoSinhModel> optional = treSoSinhRepository.findById(id);
-		if (optional.isEmpty()) {
+		if (!optional.isPresent()) {
 			throw new EntityNotFoundException("Tre So Sinh Id not found!");
 		} else {
 			treSoSinh.setId(id);

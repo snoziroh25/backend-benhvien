@@ -42,7 +42,7 @@ public class HoSoKhamService {
 
 	public void deleteById(String id) {
 		Optional<HoSoKhamModel> optional = hoSoKhamRepository.findById(id);
-		if (optional.isEmpty()) {
+		if (!optional.isPresent()) {
 			throw new EntityNotFoundException("Id not found!");
 		} else {
 			hoSoKhamRepository.deleteById(id);
@@ -60,7 +60,7 @@ public class HoSoKhamService {
 
 	public HoSoKhamModel update(HoSoKhamModel hoSoKham, String id) {
 		Optional<HoSoKhamModel> optional = hoSoKhamRepository.findById(id);
-		if (optional.isEmpty()) {
+		if (!optional.isPresent()) {
 			throw new EntityNotFoundException("Id not found!");
 		} else {
 			hoSoKham.setId(id);

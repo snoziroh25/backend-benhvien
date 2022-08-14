@@ -34,7 +34,7 @@ public class ThongBaoService {
 
 	public void deleteById(String id) {
 		Optional<ThongBaoModel> option = thongBaoRepository.findById(id);
-		if (option.isEmpty()) {
+		if (!option.isPresent()) {
 			throw new EntityNotFoundException("Id not found!");
 		} else {
 			thongBaoRepository.deleteById(id);
@@ -46,7 +46,7 @@ public class ThongBaoService {
 		Optional<ThaiPhuModel> opThaiPhu = thaiPhuRepository.findById(thongBao.getThaiPhuId());
 		if (!opThaiPhu.isPresent()) {
 			Optional<CoSoYTeModel> opCSYT = coSoYTeRepository.findById(thongBao.getThaiPhuId());
-			if (opCSYT.isEmpty()) {
+			if (!opCSYT.isPresent()) {
 				throw new EntityNotFoundException("User Id not found!");
 			}
 		}
@@ -61,7 +61,7 @@ public class ThongBaoService {
 
 	public ThongBaoModel update(ThongBaoModel thongBao, String id) {
 		Optional<ThongBaoModel> option = thongBaoRepository.findById(id);
-		if (option.isEmpty()) {
+		if (!option.isPresent()) {
 			throw new EntityNotFoundException("Id not found!");
 		} else {
 			thongBao.setId(id);
